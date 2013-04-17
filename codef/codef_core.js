@@ -210,7 +210,7 @@ function canvas(w, h, divname){
 
 		// if x1 y1 width height color
 		if(arguments.length==5){
-			this.contex.fillStyle=color;
+			this.contex.fillStyle=x3;
 			this.contex.fillRect(x1,y1,x2,y2) ;
 		}
 		// if all quad coordinates
