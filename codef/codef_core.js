@@ -118,7 +118,14 @@ function canvas(w, h, divname){
 		mycanvas.plot(20,20,50,'#FF0000');
         */
 	this.plot = function(x,y,width,color){
-		this.quad(x,y,x+width,y,x+width,y+width,x,y+width,color);
+		// save old fillstyle
+		var oldcolor = this.contex.fillStyle ;
+
+		this.contex.fillStyle=color;
+		this.contex.fillRect(x,y,width,width) ;
+
+		// restore old fillstyle
+		this.contex.fillStyle=oldcolor;
 	}
 	
 	/**
@@ -198,28 +205,28 @@ function canvas(w, h, divname){
 		mycanvas.quad(0,150,300,150,250,250,50,250,'#FF0000');
         */
 	this.quad = function(x1,y1,x2,y2,x3,y3,x4,y4,color){
-		this.contex.beginPath();
-		
+		// save old fillstyle
+		var oldcolor = this.contex.fillStyle ;
+
+		// if x1 y1 width height color
 		if(arguments.length==5){
-			this.contex.moveTo(x1,y1);
-			this.contex.lineTo(x1+x2,y1);
-			this.contex.lineTo(x1+x2,y1+y2);
-			this.contex.lineTo(x1,y1+y2);
-			this.contex.closePath();
-			this.contex.fillStyle=x3;
-			
+			this.contex.fillStyle=color;
+			this.contex.fillRect(x1,y1,x2,y2) ;
 		}
+		// if all quad coordinates
 		else{
+			this.contex.beginPath();
 			this.contex.moveTo(x1,y1);
 			this.contex.lineTo(x2,y2);
 			this.contex.lineTo(x3,y3);
 			this.contex.lineTo(x4,y4);
 			this.contex.closePath();
 			this.contex.fillStyle=color;
-			
+			this.contex.fill();		
 		}
-		this.contex.fill();
-	}
+		// restore old fillstyle
+		this.contex.fillStyle=oldcolor;
+	}	
 	
 	/**
                 <b>Init a tileset canvas.</b><br>
