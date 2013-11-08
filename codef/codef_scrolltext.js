@@ -108,6 +108,13 @@ function scrolltext_horizontal(){
 						this.speed=this.scrtxt.charAt(this.scroffset+2);
 						this.scroffset+=3;
 					}
+					else if(this.scrtxt.charAt(this.scroffset+1) =="C"){
+						var end = this.scrtxt.indexOf(';', this.scroffset+2);
+						var functionName = this.scrtxt.substring(this.scroffset+2, end);
+						
+						window[functionName]();
+						this.scroffset+=(end-this.scroffset)+1;
+					}
 				}else{
 					this.letters[i].posx=this.wide*this.fontw+(this.letters[i].posx+this.fontw);
 					if(typeof(this.sinparam)!='undefined'){
@@ -227,6 +234,13 @@ function scrolltext_vertical(){
 					else if(this.scrtxt.charAt(this.scroffset+1) =="S"){
 						this.speed=this.scrtxt.charAt(this.scroffset+2);
 						this.scroffset+=3;
+					}
+					else if(this.scrtxt.charAt(this.scroffset+1) =="C"){
+						var end = this.scrtxt.indexOf(';', this.scroffset+2);
+						var functionName = this.scrtxt.substring(this.scroffset+2, end);
+						
+						window[functionName]();
+						this.scroffset+=(end-this.scroffset)+1;
 					}
 				}else{
 					this.letters[i].posy=this.wide*this.fonth+(this.letters[i].posy+this.fonth);
