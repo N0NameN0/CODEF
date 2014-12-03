@@ -27,10 +27,11 @@ THE SOFTWARE.
 var CODEF_AUDIO_CONTEXT=null;
 var CODEF_AUDIO_NODE=null;
 function music(type){
-if(typeof(webkitAudioContext) != 'undefined'){
+window.AudioContext = window.AudioContext||window.webkitAudioContext||window.mozAudioContext ||window.oAudioContext ||window.msAudioContext;
+if(typeof(AudioContext) != 'undefined'){
         switch(type){
-                case "YM":      CODEF_AUDIO_CONTEXT = new webkitAudioContext(); // Atari YM Format !!! ;)
-                                CODEF_AUDIO_NODE = CODEF_AUDIO_CONTEXT.createJavaScriptNode(8192);
+                case "YM":      CODEF_AUDIO_CONTEXT = new AudioContext(); // Atari YM Format !!! ;) /////webkitAudioContext();
+                                CODEF_AUDIO_NODE = CODEF_AUDIO_CONTEXT.createScriptProcessor(8192);
 				this.loader=new Object();
 				this.loader["player"] = new YmProcessor();
 				this.stereo_value=false;
@@ -44,7 +45,7 @@ if(typeof(webkitAudioContext) != 'undefined'){
                 
                 this.LoadAndRun=function(zic){
 		  var __self = this;
-		  if(typeof(webkitAudioContext) != 'undefined'){
+		  if(typeof(AudioContext) != 'undefined'){
                         var fetch = new XMLHttpRequest();
                         fetch.open('GET', zic);
                         fetch.overrideMimeType("text/plain; charset=x-user-defined");
@@ -74,7 +75,7 @@ if(typeof(webkitAudioContext) != 'undefined'){
 		  var __self = this;
 	          this.loader= window.neoart.FileLoader;
 
-		  if(typeof(webkitAudioContext) != 'undefined'){
+		  if(typeof(AudioContext) != 'undefined'){
                         var fetch = new XMLHttpRequest();
                         fetch.open('GET', zic);
                         fetch.overrideMimeType("text/plain; charset=x-user-defined");
@@ -479,8 +480,8 @@ function YmProcessor(){
                         this.samplesLeft -= toMix;
                 }
                 
-                var l = event.outputBuffer.getChannelData(0);
-                var r = event.outputBuffer.getChannelData(1);
+                var l = e.outputBuffer.getChannelData(0);
+                var r = e.outputBuffer.getChannelData(1);
 
                 if (this.stereo) {
                         for (i = 0; i < this.bufferSize; ++i) {
@@ -1527,7 +1528,7 @@ function LHaHeader(source) {
             this.paused = 0;
           } else {
             this.initialize();
-            this.node = this.context.createJavaScriptNode(this.mixer.bufferSize);
+            this.node = this.context.createScriptProcessor(this.mixer.bufferSize);
             this.node.onaudioprocess = this.callback;
           }
 
@@ -1576,7 +1577,7 @@ function LHaHeader(source) {
     });
 
     if (!window.neoart.audioContext)
-      window.neoart.audioContext = new webkitAudioContext();
+      window.neoart.audioContext = new AudioContext();
 
     o.context = window.neoart.audioContext;
     o.sampleRate = o.context.sampleRate;
@@ -11710,7 +11711,7 @@ function LHaHeader(source) {
   })();
 
 
-  (function() {
+(function() {
     function S1Voice(idx) {
       return Object.create(null, {
         index        : { value:idx,  writable:true },
@@ -11922,7 +11923,7 @@ function LHaHeader(source) {
               this.patternsPtr[i] = start;
             }
 
-            this.patternsPtr.length = totPatterns;
+//            this.patternsPtr.length = totPatterns;
 
             stream.position = position - 44;
             start = stream.readUint();
@@ -12486,7 +12487,6 @@ function LHaHeader(source) {
 
     window.neoart.S1Player = S1Player;
   })();
-
 
   (function() {
     function S2Voice(idx) {
