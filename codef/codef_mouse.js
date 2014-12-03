@@ -44,8 +44,9 @@ function MouseTracker(){
                  }, false);
 
                 cvs.canvas.addEventListener('mousemove', function(ev){
-                        this.MousePosXTmp = ev.offsetX;
-                        this.MousePosYTmp = ev.offsetY;
+			rect = this.getBoundingClientRect();
+			this.MousePosXTmp = Math.round(ev.clientX - rect.left);
+			this.MousePosYTmp = Math.round(ev.clientY - rect.top);
                 }, false);
 
                 cvs.canvas.addEventListener('mousedown', function(ev){
@@ -76,4 +77,5 @@ function MouseTracker(){
                         this.list[i].MousePosY = this.list[i].canvas.MousePosYTmp;
                 }
         }
+
 }
