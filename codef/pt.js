@@ -685,6 +685,7 @@ Protracker.prototype.mix = function(ape) {
           }
         }
         mod.channel[ch].voiceperiod=mod.channel[ch].period;
+		if (mod.channel[ch].samplepos==0) modsample[ch]=mod.channel[ch].sample;
         
         // kill empty samples
         if (!mod.sample[mod.channel[ch].sample].length) mod.channel[ch].noteon=0;
