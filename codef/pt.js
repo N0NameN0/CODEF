@@ -65,6 +65,8 @@
     * switch to fixed point sample pointers, Math.floor() is _slow_ on iOS
 */
 
+var modsample = new Array();
+
 // constructor for protracker player object
 function Protracker()
 {
