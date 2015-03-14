@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<!------------------------------------------------------------------------------
+Copyright (c) 2011 Antoine Santo Aka NoNameNo
+
+This File is part of the CODEF project.
+
+More info : http://codef.santo.fr
+Demo gallery http://www.wab.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+------------------------------------------------------------------------------>
+<html> 
+  <head> 
+    
+    <script src="http://codef.santo.fr/codef/codef_core.js"></script> 
+    <script src="http://codef.santo.fr/codef/codef_starfield.js"></script> 
+    <script> 
+      
+      var mycanvas;
+      var my2dstarfield;
+      var my2dstarsparams=[
+        {nb:30, speedy:1.0, speedx:1, params:0},
+        {nb:30, speedy:0.8, speedx:0.8, params:1},
+        {nb:30, speedy:0.6, speedx:0.6, params:2},
+      ];
+        
+        var bubble = new Array();
+        bubble[0]=new image('media/bubble0.png');
+      bubble[1]=new image('media/bubble1.png');
+      bubble[2]=new image('media/bubble2.png');
+      
+      function init(){
+        mycanvas=new canvas(640,480,"main");
+        my2dstarfield=new starfield2D_img(mycanvas,bubble,my2dstarsparams);
+        
+        go();
+      }
+      
+      function go(){
+        mycanvas.fill('#000000');
+        my2dstarfield.draw();
+        requestAnimFrame( go );
+      }
+      
+    </script> 
+  </head> 
+  <body onLoad="init();">
+    <br>
+    <br>
+    <center><div id="main"></div><br><br><a href="javascript:window.location='view-source:'+window.location">View Source</a></center>
+    </body> 
+    </html>
+      

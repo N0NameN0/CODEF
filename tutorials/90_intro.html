@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<!------------------------------------------------------------------------------
+Copyright (c) 2011 Antoine Santo Aka NoNameNo
+
+This File is part of the CODEF project.
+
+More info : http://codef.santo.fr
+Demo gallery http://www.wab.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+------------------------------------------------------------------------------>
+<html> 
+  <head> 
+    
+    <script src="http://codef.santo.fr/codef/codef_core.js"></script> 
+    <script src="http://codef.santo.fr/codef/codef_3d.js"></script> 
+    <script src="http://codef.santo.fr/codef/codef_starfield.js"></script> 
+    <script src="http://codef.santo.fr/codef/codef_gradient.js"></script>
+    <script src="http://codef.santo.fr/codef/codef_fx.js"></script> 
+    <script src="http://codef.santo.fr/codef/codef_scrolltext.js"></script> 
+    
+    <script> 
+      
+      var mycanvas;
+      var my3d;
+      var mystarfield;
+      
+      var myobj = new Array();
+      var myobjvert = new Array();
+      myobjvert=[
+        {x:-1, y:0, z:-1},
+        {x: 1, y:0, z:-1},
+        {x: 1, y:0, z: 1},
+        {x:-1, y:0, z: 1},
+        {x:0, y:-2, z: 0},
+        {x:0, y: 2, z: 0},
+      ];
+        myobj=[ 
+        {p1:0, p2:1, p3:4, params:new MeshBasicMaterial({ color: 0x00aa00, opacity:0.7})},
+        {p1:1, p2:2, p3:4, params:new MeshBasicMaterial({ color: 0xeeeeee, opacity:0.7})},
+        {p1:2, p2:3, p3:4, params:new MeshBasicMaterial({ color: 0x00aa00, opacity:0.7})},
+        {p1:3, p2:0, p3:4, params:new MeshBasicMaterial({ color: 0xeeeeee, opacity:0.7})},
+        {p1:0, p2:1, p3:5, params:new MeshBasicMaterial({ color: 0xeeeeee, opacity:0.7})},
+        {p1:1, p2:2, p3:5, params:new MeshBasicMaterial({ color: 0x00aa00, opacity:0.7})},
+        {p1:2, p2:3, p3:5, params:new MeshBasicMaterial({ color: 0xeeeeee, opacity:0.7})},
+        {p1:3, p2:0, p3:5, params:new MeshBasicMaterial({ color: 0x00aa00, opacity:0.7})},
+      ];
+      
+      var mygrad;
+      var mygradcolor=
+          [
+            {color: 'rgb(0,50,0)' ,  offset:0},
+            {color: 'rgb(0,0,0)' ,  offset:0.25},
+            {color: 'rgb(0,0,0)' ,  offset:0.75},
+            {color: 'rgb(0,50,0)' ,  offset:1}
+            
+          ];
+      
+      var myfont = new image('media/font1.png');
+      var myoffscreencanvas;
+      var myscrolltext;
+      
+      var myfx;
+      var myfxparam=[
+        {value: 0, amp: 30, inc:0.03, offset: -0.05},
+        {value: 0, amp: 60, inc:0.01, offset: -0.01}
+      ];
+      
+      
+      
+      function init(){
+        mycanvas=new canvas(640,480,"main");
+        myoffscreencanvas=new canvas(640,32);
+        myfont.initTile(32,32,32);
+        
+        myscrolltext = new scrolltext_horizontal();
+        myscrolltext.scrtxt="YOP YOP NONAMENO IS BACK WITH THIS SCROLLY.. WHAT A SHITTY NICE SCROLL....     "
+          myscrolltext.init(myoffscreencanvas,myfont,1);
+        
+        myfx=new FX(myoffscreencanvas,mycanvas,myfxparam);
+        
+        my3d=new codef3D(mycanvas, 20, 20, 1, 50 );
+        my3d.faces(myobjvert,myobj, true, false );
+        
+        mystarfield=new starfield3D(mycanvas, 500, 2, 640,480, 320, 240,'#FFFFFF', 100,0,0);
+        
+        mygrad=new grad(mycanvas,mygradcolor);
+        
+        go();
+      }
+      
+      function go(){
+        mygrad.drawH();
+        mystarfield.draw();
+        myoffscreencanvas.clear();
+        myscrolltext.draw(0);
+        myfx.siny(0,240);
+        my3d.group.rotation.x+=0.01;
+        my3d.group.rotation.y+=0.02;
+        my3d.group.rotation.z+=0.04;
+        my3d.draw();
+        requestAnimFrame( go );
+      }
+      
+    </script> 
+  </head> 
+  <body onLoad="init();" bgcolor="#000000">
+    <br>
+    <br>
+    <center><div id="main"></div><br><br><a href="javascript:window.location='view-source:'+window.location">View Source</a></center>
+      </body> 
+      </html>
+      

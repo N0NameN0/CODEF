@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<!------------------------------------------------------------------------------
+Copyright (c) 2011 Antoine Santo Aka NoNameNo
+
+This File is part of the CODEF project.
+
+More info : http://codef.santo.fr
+Demo gallery http://www.wab.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+------------------------------------------------------------------------------> 
+<html> 
+  <head> 
+    
+    <script src="http://codef.santo.fr/codef/codef_core.js"></script>  
+    <script src="http://codef.santo.fr/codef/codef_mouse.js"></script>
+    
+    <script> 
+      
+      var mycanvas;
+      
+      var MyMouseTracker;              
+      var mouseX=0;
+      var mouseY=0;
+      
+      function init(){ 
+        mycanvas=new canvas(640,480,"main");
+        
+        MyMouseTracker = new MouseTracker();
+        MyMouseTracker.addMouseTrack(mycanvas,false);
+        
+        go();
+      }
+      
+      function go(){
+        mycanvas.fill('#000000'); 
+        
+        mouseX = mycanvas.MousePosX ;
+        mouseY = mycanvas.MousePosY ;  
+        
+        MyMouseTracker.MouseUpdate();
+        
+        if (mycanvas.MouseButt==1) {      
+          mycanvas.contex.font = '20pt Calibri';
+          mycanvas.contex.fillStyle = 'green';
+          mycanvas.contex.fillText("Button 1 is pressed down at  X:"+mouseX+"   Y:"+mouseY , 100, 130);
+        }
+        
+        if (mycanvas.MouseButt==2) {
+          mycanvas.contex.font = '20pt Calibri';
+          mycanvas.contex.fillStyle = 'orange';
+          mycanvas.contex.fillText("Mid Button is pressed down at  X:"+mouseX+"   Y:"+mouseY , 100, 190);
+        }  
+        
+        if (mycanvas.MouseButt==3) {
+          mycanvas.contex.font = '20pt Calibri';
+          mycanvas.contex.fillStyle = 'blue';
+          mycanvas.contex.fillText("Button 2 is pressed down at  X:"+mouseX+"   Y:"+mouseY , 100, 160);
+        }  
+        
+        if(mouseX>0 && mouseX<640){
+          mycanvas.contex.font = '20pt Calibri';
+          mycanvas.contex.fillStyle = 'red';
+          mycanvas.contex.fillText("Mouse pos is    X:"+mouseX+"    Y:"+mouseY , 100, 100);  
+        }
+        
+        requestAnimFrame( go );
+      }
+      
+    </script> 
+  </head> 
+  <body onLoad="init();">
+    <br>
+    <br>
+    <center><div id="main"></div><br><br><a href="javascript:window.location='view-source:'+window.location">View Source</a></center>
+  </body> 
+</html>

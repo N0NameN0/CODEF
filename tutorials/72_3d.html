@@ -1,0 +1,91 @@
+<!DOCTYPE HTML> 
+<!------------------------------------------------------------------------------
+Copyright (c) 2011 Antoine Santo Aka NoNameNo
+
+This File is part of the CODEF project.
+
+More info : http://codef.santo.fr
+Demo gallery http://www.wab.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+------------------------------------------------------------------------------>  
+<html> 
+  <head> 
+    
+    <script src="http://codef.santo.fr/codef/codef_core.js"></script> 
+    <script src="http://codef.santo.fr/codef/codef_3d.js"></script> 
+    <script src="http://codef.santo.fr/codef/codef_stats.js"></script> 
+    
+    <script> 
+      
+      var mycanvas;
+      var my3d;
+      
+      var myobj = new Array();
+      var myobjvert = new Array();
+      myobjvert=[
+        {x:-100, y:0, z: 100},
+        {x: 100, y:0, z: 100},
+        {x: 100, y:0, z: -100},
+        {x:-100, y:0, z: -100},
+        {x:0, y: 200, z: 0},
+        {x:0, y:-200, z: 0},
+      ];
+        
+        var myimage=new image('media/envmap.png'); 
+        
+        myobj=[ 
+        {p1:1, p2:4, p3:0, u1:1,v1:1, u2:0.5,v2:0, u3:0,v3:1 ,params:new MeshBasicMaterial({ envMap: new Texture( myimage.img, new SphericalReflectionMapping() ) })},
+        {p1:2, p2:4, p3:1, u1:1,v1:1, u2:0.5,v2:0, u3:0,v3:1 ,params:new MeshBasicMaterial({ envMap: new Texture( myimage.img, new SphericalReflectionMapping() ) })},
+        {p1:3, p2:4, p3:2, u1:1,v1:1, u2:0.5,v2:0, u3:0,v3:1 ,params:new MeshBasicMaterial({ envMap: new Texture( myimage.img, new SphericalReflectionMapping() ) })},
+        {p1:0, p2:4, p3:3, u1:1,v1:1, u2:0.5,v2:0, u3:0,v3:1 ,params:new MeshBasicMaterial({ envMap: new Texture( myimage.img, new SphericalReflectionMapping() ) })},
+        {p1:0, p2:5, p3:1, u1:1,v1:1, u2:0.5,v2:0, u3:0,v3:1 ,params:new MeshBasicMaterial({ envMap: new Texture( myimage.img, new SphericalReflectionMapping() ) })},
+        {p1:1, p2:5, p3:2, u1:1,v1:1, u2:0.5,v2:0, u3:0,v3:1 ,params:new MeshBasicMaterial({ envMap: new Texture( myimage.img, new SphericalReflectionMapping() ) })},
+        {p1:2, p2:5, p3:3, u1:1,v1:1, u2:0.5,v2:0, u3:0,v3:1 ,params:new MeshBasicMaterial({ envMap: new Texture( myimage.img, new SphericalReflectionMapping() ) })},
+        {p1:3, p2:5, p3:0, u1:1,v1:1, u2:0.5,v2:0, u3:0,v3:1 ,params:new MeshBasicMaterial({ envMap: new Texture( myimage.img, new SphericalReflectionMapping() ) })},
+      ];
+      
+      function init(){
+        addstats();
+        mycanvas=new canvas(640,480,"main");
+        my3d=new codef3D(mycanvas, 900, 40, 1, 1600 );
+        my3d.faces(myobjvert,myobj, false, true );
+        go();
+      }
+      
+      function go(){
+        mycanvas.fill('#000000');
+        my3d.group.rotation.x+=0.01;
+        my3d.group.rotation.y+=0.02;
+        my3d.group.rotation.z+=0.04;
+        my3d.draw();
+        
+        updatestats();
+        
+        requestAnimFrame( go );
+      }
+      
+    </script> 
+  </head> 
+  <body onLoad="init();" topmargin=0 leftmargin=0> 
+    <br> 
+    <br> 
+    <center><div id="main"></div><br><br><a href="javascript:window.location='view-source:'+window.location">View Source</a></center> 
+  </body> 
+</html>
