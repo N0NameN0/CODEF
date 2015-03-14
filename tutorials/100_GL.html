@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!------------------------------------------------------------------------------
+Copyright (c) 2011 Antoine Santo Aka NoNameNo
+
+This File is part of the CODEF project.
+
+More info : http://codef.santo.fr
+Demo gallery http://www.wab.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+------------------------------------------------------------------------------>
+<html>
+  <head>
+    <script src="http://threejs.org/build/three.min.js"></script>
+    <script src="http://codef.santo.fr/codef/codef_core.js"></script> 
+    <script src="http://codef.santo.fr/codef/codef_starfield.js"></script> 
+    
+    <script>
+      var camera, scene, GL_Canvas;
+      var group;
+      var Codef_Canvas;
+      var mystarfield;
+      
+      
+      function init() {
+        // Create a codef canvas added to the div "main"
+        Codef_Canvas=new canvas(640,480,"main");
+        
+        // Initialize the starfield
+        mystarfield=new starfield3D(Codef_Canvas, 500, 2, 640,480, 320, 240,'#FFFFFF', 100,0,0);
+        
+        // Here i Create a WEBGL CANVAS (hidden since i dont append it to document)
+        GL_Canvas = new THREE.WebGLRenderer({ alpha: true });
+        GL_Canvas.setSize( 640,480);
+        
+        // Here i Create a Camera in this WEBGL environement
+        camera = new THREE.PerspectiveCamera( 35, 640/480, 1, 1000 );
+        camera.position.z = 350;;
+        
+        // Here i Create a Scene
+        scene = new THREE.Scene();
+        
+        // Here i create an Ambiant Light in the scene
+        scene.add( new THREE.AmbientLight(  0x101010 ) );
+        
+        // Here i Create an empty group to place stuff in
+        group = new THREE.Object3D();
+        
+        // Here i add this empty group to the scene
+        scene.add( group );
+        
+        // Here i create a directional light
+        var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
+        directionalLight.position.set( 1, 0, 1 );
+        
+        // and i add it to the scene
+        scene.add( directionalLight );
+        
+        // i now create a mesh ( geometry + material = mesh)
+        var geometry = new THREE.TorusGeometry( 60, 20, 32, 32 );
+        
+        var material = new THREE.MeshPhongMaterial( { 
+          color: 0xcccc00,
+          shading: THREE.SmoothShading, 
+          specular: 0xffffcc,
+          shininess : 10
+        } );
+        
+        var tor = new THREE.Mesh( geometry, material );
+        // and add it to the group
+        group.add(tor);
+        
+        //call Main loop
+        go();
+      }
+      
+      function go() {
+        // Render our hidden WebGL scene
+        GL_Canvas.render( scene, camera );
+        
+        // Clear our 2D codef Canvas with Black
+        Codef_Canvas.fill("#000000");
+        
+        // Draw the starfield
+        mystarfield.draw();
+        
+        // Draw the Webgl Scene to our 2D codef Canvas
+        Codef_Canvas.contex.drawImage(GL_Canvas.domElement,0,0);
+        
+        // Rotate our Group ;)
+        group.rotation.y+=0.010;
+        group.rotation.x+=0.020;
+        
+        // loop
+        requestAnimFrame( go );
+      }
+    </script>
+  </head>
+  <body onLoad="init();">
+    <center><div id="main"></div><br><br><a href="javascript:window.location='view-source:'+window.location">View Source</a></center>
+  </body>
+</html>
