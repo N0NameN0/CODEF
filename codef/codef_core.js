@@ -330,20 +330,23 @@ function canvas(w, h, divname){
 		mycanvas.drawTile(mycanvas,10,10,0,0,50,50,1,0,1,1);
         */
         this.drawPart = function(dst,x,y,partx,party,partw,parth,alpha, rot,zx,zy){
+        	if(partw<=0 || parth<=0){
+        		return;
+        	}
                 var tmp=dst.contex.globalAlpha;
 		if(typeof(alpha)=='undefined') alpha=1;
                 dst.contex.globalAlpha=alpha;
                 if(arguments.length==7 || arguments.length==8){
                        	dst.contex.translate(x,y);
 			if(this.midhandled==true) dst.contex.translate(-partw/2,-parth/2); else dst.contex.translate(-this.handlex,-this.handley);
-			dst.contex.drawImage(this.canvas,partx,party,partw,parth,null,null,partw,parth);
+			dst.contex.drawImage(this.canvas,partx,party,partw,parth,0,0,partw,parth);
 			dst.contex.setTransform(1, 0, 0, 1, 0, 0);
 		}
 		else if(arguments.length==9){
                        	dst.contex.translate(x,y);
 			dst.contex.rotate(rot*Math.PI/180);
 			if(this.midhandled==true) dst.contex.translate(-partw/2,-parth/2); else dst.contex.translate(-this.handlex,-this.handley);
-			dst.contex.drawImage(this.canvas,partx,party,partw,parth,null,null,partw,parth);
+			dst.contex.drawImage(this.canvas,partx,party,partw,parth,0,0,partw,parth);
 			dst.contex.setTransform(1, 0, 0, 1, 0, 0);
 		}
                 else{
@@ -351,7 +354,7 @@ function canvas(w, h, divname){
 			dst.contex.rotate(rot*Math.PI/180);
 			dst.contex.scale(zx,zy);
 			if(this.midhandled==true) dst.contex.translate(-partw/2,-parth/2); else dst.contex.translate(-this.handlex,-this.handley);
-			dst.contex.drawImage(this.canvas,partx,party,partw,parth,null,null,partw,parth);
+			dst.contex.drawImage(this.canvas,partx,party,partw,parth,0,0,partw,parth);
 			dst.contex.setTransform(1, 0, 0, 1, 0, 0);
                 }
                 dst.contex.globalAlpha=tmp;
