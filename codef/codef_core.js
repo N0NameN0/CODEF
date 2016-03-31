@@ -330,6 +330,16 @@ function canvas(w, h, divname){
 		mycanvas.drawTile(mycanvas,10,10,0,0,50,50,1,0,1,1);
         */
         this.drawPart = function(dst,x,y,partx,party,partw,parth,alpha, rot,zx,zy){
+        	if(partx<0) {
+        		x-=partx/(this.midhandled==true?2:1);
+        		partw+=partx;
+        		partx=0;
+        	}
+        	if(party<0) {
+        		y-=party/(this.midhandled==true?2:1);
+        		parth+=party;
+        		party=0;
+        	}
         	if(partw<=0 || parth<=0){
         		return;
         	}
@@ -537,6 +547,19 @@ function image(img){
 		myimage.drawTile(mycanvas,10,10,0,0,50,50,1,0,1,1);
         */
         this.drawPart = function(dst,x,y,partx,party,partw,parth,alpha, rot,zx,zy){
+        	if(partx<0) {
+        		x-=partx/(this.midhandled==true?2:1);
+        		partw+=partx;
+        		partx=0;
+        	}
+        	if(party<0) {
+        		y-=party/(this.midhandled==true?2:1);
+        		parth+=party;
+        		party=0;
+        	}
+        	if(partw<=0 || parth<=0){
+        		return;
+        	}
                 var tmp=dst.contex.globalAlpha;
 		if(typeof(alpha)=='undefined') alpha=1;
                 dst.contex.globalAlpha=alpha;
