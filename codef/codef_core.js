@@ -334,11 +334,19 @@ function canvas(w, h, divname){
         		x-=partx/(this.midhandled==true?2:1);
         		partw+=partx;
         		partx=0;
+            } else {
+                if (this.midhandled==false) {
+                    partw = Math.min(partw,this.img.width-partx);
+                }
         	}
         	if(party<0) {
         		y-=party/(this.midhandled==true?2:1);
         		parth+=party;
         		party=0;
+            } else {
+                if (this.midhandled==false) {
+                    parth = Math.min(parth,this.img.height-party);
+                }
         	}
         	if(partw<=0 || parth<=0){
         		return;
