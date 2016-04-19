@@ -336,7 +336,7 @@ function canvas(w, h, divname){
         		partx=0;
             } else {
                 if (this.midhandled==false) {
-                    partw = Math.min(partw,this.img.width-partx);
+                    partw = Math.min(partw,this.width-partx);
                 }
         	}
         	if(party<0) {
@@ -345,7 +345,7 @@ function canvas(w, h, divname){
         		party=0;
             } else {
                 if (this.midhandled==false) {
-                    parth = Math.min(parth,this.img.height-party);
+                    parth = Math.min(parth,this.height-party);
                 }
         	}
         	if(partw<=0 || parth<=0){
