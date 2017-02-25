@@ -1,21 +1,16 @@
 /*------------------------------------------------------------------------------
 Copyright (c) 2011 Antoine Santo Aka NoNameNo
-
 This File is part of the CODEF project.
-
 More info : http://codef.santo.fr
 Demo gallery http://www.wab.com
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in
 all copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,7 +34,6 @@ window.requestAnimFrame = (function(){
 /**
         <b>Create a new canvas object.</b><br>
 	canvas(w, h, divname)<br>
-
         @class canvas
         @param {Number in pixel} w The Width of the canvas you want to create.
         @param {Number in pixel} h The Height of the canvas you want to create.
@@ -78,7 +72,6 @@ function canvas(w, h, divname){
 	/**
                 <b>Fill the canvas.</b><br>
 		canvas.fill(color)<br>
-
                 @function canvas.fill
                 @param {Color} color The color you want to fill the canvas with.
 		@example
@@ -96,7 +89,6 @@ function canvas(w, h, divname){
 
 	/**
                 <b>Clear the canvas.</b><br>
-
                 @function canvas.clear
 		@example
 		mycanvas.clear();
@@ -108,7 +100,6 @@ function canvas(w, h, divname){
 	/**
                 <b>Draw a plot on the canvas.</b><br>
 		canvas.plot(x1,y1,width,color)<br>
-
                 @function canvas.plot
                 @param {Number in pixel} x The x coord you want to plot in the canvas.
                 @param {Number in pixel} y The y coord you want to plot in the canvas.
@@ -131,7 +122,6 @@ function canvas(w, h, divname){
 	/**
                 <b>Draw a line on the canvas.</b><br>
 		canvas.line(x1,y1,x2,y2,width,color)<br>
-
                 @function canvas.line
                 @param {Number in pixel} x1 The x coord of the line start in the canvas.
                 @param {Number in pixel} y1 The y coord of the line start in the canvas.
@@ -157,7 +147,6 @@ function canvas(w, h, divname){
 	/**
                 <b>Draw a filled triangle on the canvas.</b><br>
 		canvas.triangle(x1,y1,x2,y2,x3,y3,color)<br>
-
                 @function canvas.triangle
                 @param {Number in pixel} x1 The x coord of the 1st edge of the triangle in the canvas.
                 @param {Number in pixel} y1 The y coord of the 1st edge of the triangle in the canvas.
@@ -227,11 +216,39 @@ function canvas(w, h, divname){
 		// restore old fillstyle
 		this.contex.fillStyle=oldcolor;
 	}	
+
+	/**
+                <b>Draw a filled circle (disc) on the canvas.</b><br>
+                <br>
+		it can be used with 4 params : <br>
+		canvas.circle(x1,y1,R,color)<br>
+		<br>
+
+                @function canvas.circle
+                @param {Number in pixel} x1 The x coord of the centre of the circle in the canvas.
+                @param {Number in pixel} y1 The y coord of the centre of the circle in the canvas.
+                @param {Number in pixel} R The radius of the circle in the canvas.
+                @param {Color} color The color of the circle.
+		@example
+		mycanvas.circle(320,200,100,'#FF0000');
+        */
+	this.circle = function(x1,y1,R,color){
+		// save old fillstyle
+		var oldcolor = this.contex.fillStyle ;
+
+		// if x1 y1 Radius color
+			this.contex.fillStyle=color;
+			this.contex.beginPath(); 
+			this.contex.arc( x1, y1, R, 0, Math.PI*2, true ); 
+			this.contex.closePath(); 
+			this.contex.fill();
+		// restore old fillstyle
+		this.contex.fillStyle=oldcolor;
+	}
 	
 	/**
                 <b>Init a tileset canvas.</b><br>
                 canvas.initTile(tilew,tileh, tilestart)<br>
-
                 @function canvas.initTile
                 @param {Number in pixel} tilew The Width of one tile.
                 @param {Number in pixel} tileh The Height of one tile.
@@ -249,7 +266,6 @@ function canvas(w, h, divname){
 	/**
                 <b>Draw the canvas to another canvas.</b><br>
                 canvas.draw(dst,x,y,alpha, rot,w,h)<br>
-
                 @function canvas.draw
 		@param {Object} dst The destination canvas.
                 @param {Number in pixel} x The x coord in the destination canvas (based on the handle coord).
@@ -288,7 +304,6 @@ function canvas(w, h, divname){
 	/**
                 <b>Draw a tile from this canvas to another canvas.</b><br>
                 canvas.drawTile(dst, nb, x, y, alpha, rot, w, h)<br>
-
                 @function canvas.drawTile
                 @param {Object} dst The destination canvas.
 		@param {Number} nb the tile number.
@@ -313,7 +328,6 @@ function canvas(w, h, divname){
 	/**
                 <b>Draw a part of this canvas to another canvas.</b><br>
                 canvas.drawPart(dst,x,y,partx,party,partw,parth,alpha, rot,zx,zy)<br>
-
                 @function canvas.drawPart
                 @param {Object} dst The destination canvas.
                 @param {Number in pixel} x The x coord in the destination canvas (based on the handle coord).
@@ -380,7 +394,6 @@ function canvas(w, h, divname){
 
 	 /**
                 <b>Set the handle coord of this canvas to the center.</b><br>
-
                 @function canvas.setmidhandle
 		@example
 		mycanvas.setmidhandle();
@@ -394,7 +407,6 @@ function canvas(w, h, divname){
 	/**
                 <b>Set the handle of the canvas.</b><br>
                 canvas.sethandle(x,y)<br>
-
                 @function canvas.sethandle
                 @param {Number in pixel} x The x coord of the handle of the canvas.
                 @param {Number in pixel} y The y coord of the handle of the canvas.
@@ -425,7 +437,6 @@ function canvas(w, h, divname){
 /**
         <b>Create an image object and load a remote/local png/gif/jpg in it.</b><br>
         image(img)<br>
-
         @class image
         @param {string} img local or url to an jpg/png/gif image.
         @property {Object} img the dom image object.
@@ -437,10 +448,8 @@ function canvas(w, h, divname){
 	@example
 	// with a local file
 	var mylogo = new image('logo.png');
-
 	// with a remote image
 	var mylogo = new image('http://www.myremotesite.com/logo.png');
-
 */
 function image(img){
 	this.img = new Image();
@@ -455,7 +464,6 @@ function image(img){
 	/**
                 <b>Init a tileset image.</b><br>
                 image.initTile(tilew,tileh, tilestart)<br>
-
                 @function image.initTile
                 @param {Number in pixel} tilew The Width of one tile.
                 @param {Number in pixel} tileh The Height of one tile.
@@ -474,7 +482,6 @@ function image(img){
 /**
                 <b>Draw the image to a canvas.</b><br>
                 image.draw(dst,x,y,alpha, rot,w,h)<br>
-
                 @function image.draw
                 @param {Object} dst The destination canvas.
                 @param {Number in pixel} x The x coord in the destination canvas (based on the handle coord of the image).
@@ -513,7 +520,6 @@ function image(img){
 	/**
                 <b>Draw a tile from this image to a canvas.</b><br>
                 image.drawTile(dst, nb, x, y, alpha, rot, w, h)<br>
-
                 @function image.drawTile
                 @param {Object} dst The destination canvas.
                 @param {Number} nb the tile number.
@@ -538,7 +544,6 @@ function image(img){
 	/**
                 <b>Draw a part of this image to a canvas.</b><br>
                 image.drawPart(dst,x,y,partx,party,partw,parth,alpha, rot,zx,zy)<br>
-
                 @function image.drawPart
                 @param {Object} dst The destination canvas.
                 @param {Number in pixel} x The x coord in the destination canvas (based on the handle coord of the image).
@@ -607,7 +612,6 @@ function image(img){
 	
 	/**
                 <b>Set the handle coord of this image to the center.</b><br>
-
                 @function image.setmidhandle
 		@example
 		myimage.setmidhandle();
@@ -621,7 +625,6 @@ function image(img){
 	/**
                 <b>Set the handle of the image.</b><br>
                 image.sethandle(x,y)<br>
-
                 @function image.sethandle
                 @param {Number in pixel} x The x coord of the handle of the image.
                 @param {Number in pixel} y The y coord of the handle of the image.
