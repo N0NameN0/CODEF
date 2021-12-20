@@ -68,6 +68,8 @@ function grad(dst,params){
 		this.dst.contex.globalAlpha=1;
 		var lingrad = this.dst.contex.createLinearGradient(0,0,0,this.dst.canvas.height);
 		for(var j=0;j<this.params.length;j++){
+			if(this.params[j].offset < 0) this.params[j].offset = 0;
+			else if(this.params[j].offset > 1) this.params[j].offset = 1;
 			lingrad.addColorStop(this.params[j].offset, this.params[j].color);
 		}
 		this.dst.contex.fillStyle = lingrad;
@@ -90,6 +92,8 @@ function grad(dst,params){
 		this.dst.contex.globalAlpha=1;
 		var lingrad = this.dst.contex.createLinearGradient(0,0,this.dst.canvas.width,0);
 		for(var j=0;j<this.params.length;j++){
+			if(this.params[j].offset < 0) this.params[j].offset = 0;
+                        else if(this.params[j].offset > 1) this.params[j].offset = 1;
 			lingrad.addColorStop(this.params[j].offset, this.params[j].color);
 		}
 		this.dst.contex.fillStyle = lingrad;
