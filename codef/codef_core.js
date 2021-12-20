@@ -66,6 +66,7 @@ function canvas(w, h, divname){
 	if(divname) document.getElementById(divname).appendChild(this.canvas);
 	this.canvas.setAttribute('width', w);
 	this.canvas.setAttribute('height', h);
+	this.canvas.id="maincanvas";
 	this.contex = this.canvas.getContext('2d');
 	
 	this.handlex=0;
